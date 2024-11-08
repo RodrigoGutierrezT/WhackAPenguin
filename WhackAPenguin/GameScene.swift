@@ -8,6 +8,7 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    var slots = [WhackSlot]()
     var scoreLabel: SKLabelNode!
     
     var score = 0 {
@@ -33,5 +34,11 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    }
+    
+    func createSlot(at position: CGPoint) {
+        let slot = WhackSlot()
+        slot.configure(at: position)
+        addChild(slot)
     }
 }
