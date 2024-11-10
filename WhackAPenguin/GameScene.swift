@@ -92,6 +92,13 @@ class GameScene: SKScene {
             gameOver.zPosition = 1
             addChild(gameOver)
             
+            let finalScore = SKLabelNode(fontNamed: "Chalkduster")
+            finalScore.fontSize = 56
+            finalScore.text = "Your Final Score is: \(score)!"
+            finalScore.position = CGPoint(x: 512, y: 284)
+            finalScore.zPosition = 1
+            addChild(finalScore)
+            
             return
         }
         
