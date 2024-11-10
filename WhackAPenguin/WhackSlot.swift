@@ -40,6 +40,9 @@ class WhackSlot: SKNode {
         // guard to not show again if already visible
         if isVisible { return }
         
+        charNode.xScale = 1
+        charNode.yScale = 1
+        
         // use moveBy Action to move up the penguin by 80 in the y axis
         charNode.run(SKAction.moveBy(x: 0, y: 80, duration: 0.05))
         isVisible = true
@@ -63,5 +66,22 @@ class WhackSlot: SKNode {
         
         charNode.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
         isVisible = false
+    }
+    
+    func hit() {
+        isHit = true
+        
+        // sequence steps
+        let delay = SKAction.wait(forDuration: 0.25)
+        let hide = SKAction.moveBy(x: 0, y: -80, duration: 0.5)
+        let notVisible = SKAction.run { [weak self] in
+            self?.isVisible = false
+        }
+        
+        // build sequence
+        let sequence =  SKAction.sequence([delay, hide, notVisible])
+        
+        // run sequence
+        charNode.run(sequence)
     }
 }
