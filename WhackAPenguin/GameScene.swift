@@ -12,6 +12,7 @@ class GameScene: SKScene {
     var scoreLabel: SKLabelNode!
     
     var popupTime = 0.85
+    var numRounds = 0
     
     var score = 0 {
         didSet {
@@ -47,16 +48,12 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let tappedNodes = nodes(at: location)
-        print(tappedNodes)
         
         for node in tappedNodes {
             
             guard let whackASlot = node.parent?.parent as? WhackSlot else { continue }
             if !whackASlot.isVisible { continue }
             if whackASlot.isHit { continue }
-            
-            print("individual node")
-            print(whackASlot)
             
             whackASlot.hit()
             
@@ -83,6 +80,21 @@ class GameScene: SKScene {
     }
     
     func createEnemy() {
+        numRounds += 1
+        
+        if numRounds >= 30 {
+            for slot in slots {
+                slot.hide()
+            }
+            
+            let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver.position = CGPoint(x: 512, y: 384)
+            gameOver.zPosition = 1
+            addChild(gameOver)
+            
+            return
+        }
+        
         // decrease popupTime every time the func is called
         popupTime *= 0.991
         
